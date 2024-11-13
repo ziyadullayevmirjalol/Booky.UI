@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:7177/api/author';
+const apiUrl = 'https://booky-b5bu.onrender.com/api/author';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadAuthors();

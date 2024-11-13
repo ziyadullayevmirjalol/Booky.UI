@@ -1,4 +1,4 @@
-const apiUrl = 'https://localhost:7177/api/book';
+const apiUrl = 'https://booky-b5bu.onrender.com/api/book';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadBooks();
