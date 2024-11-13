@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Management</title>
+</head>
+
+<body>
+    <h4><a href="../index.html">Go Back</a></h4>
+    <hr>
+    <h1>Review Management</h1>
+
+    <h2>Review List</h2>
+    <table id="authorsTable" border="1" width="700px">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Biography</th>
+                <th width="100px">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="authorsList">
+            <!-- Authors will be loaded here -->
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <h2>Add New Author</h2>
+    <form id="addAuthorForm">
+        <input type="text" id="firstName" placeholder="First Name" required />
+        <input type="text" id="lastName" placeholder="Last Name" required />
+        <input type="text" id="biography" placeholder="Biography" />
+        <button type="submit">Add Author</button>
+    </form>
+
+    <h2>Update Author</h2>
+    <form id="updateAuthorForm">
+        <input type="hidden" id="updateAuthorId" />
+        <input type="text" id="updateFirstName" placeholder="First Name" required />
+        <input type="text" id="updateLastName" placeholder="Last Name" required />
+        <input type="text" id="updateBiography" placeholder="Biography" />
+        <button type="submit">Update Author</button>
+    </form>
+
+    <script src="/js/author.js"></script>
+</body>
+
+</html>
