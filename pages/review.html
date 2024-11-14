@@ -1,51 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Management</title>
 </head>
-
 <body>
     <h4><a href="../index.html">Go Back</a></h4>
     <hr>
     <h1>Review Management</h1>
 
     <h2>Review List</h2>
-    <table id="authorsTable" border="1" width="700px">
+    <table id="reviewsTable" border="1" width="700px">
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Biography</th>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Rating</th>
+                <th>Book Title</th>
                 <th width="100px">Actions</th>
             </tr>
         </thead>
-        <tbody id="authorsList">
-            <!-- Authors will be loaded here -->
+        <tbody id="reviewsList">
         </tbody>
     </table>
     <br>
     <hr>
-    <h2>Add New Author</h2>
-    <form id="addAuthorForm">
-        <input type="text" id="firstName" placeholder="First Name" required />
-        <input type="text" id="lastName" placeholder="Last Name" required />
-        <input type="text" id="biography" placeholder="Biography" />
-        <button type="submit">Add Author</button>
+    <h2>Add New Review</h2>
+    <form id="addReviewForm">
+        <input type="text" id="reviewContent" placeholder="Content" required />
+        <input type="number" id="rating" placeholder="Rating" required min="1" max="5" />
+        <input type="number" id="bookId" placeholder="Book ID" required />
+        <button type="submit">Add Review</button>
     </form>
 
-    <h2>Update Author</h2>
-    <form id="updateAuthorForm">
-        <input type="hidden" id="updateAuthorId" />
-        <input type="text" id="updateFirstName" placeholder="First Name" required />
-        <input type="text" id="updateLastName" placeholder="Last Name" required />
-        <input type="text" id="updateBiography" placeholder="Biography" />
-        <button type="submit">Update Author</button>
+    <h2>Update Review</h2>
+    <form id="updateReviewForm">
+        <input type="hidden" id="updateReviewId" />
+        <input type="text" id="updateContent" placeholder="Content" required />
+        <input type="number" id="updateRating" placeholder="Rating" required min="1" max="5" />
+        <button type="submit">Update Review</button>
     </form>
 
-    <script src="/js/author.js"></script>
+    <script src="/js/review.js"></script>
 </body>
-
 </html>

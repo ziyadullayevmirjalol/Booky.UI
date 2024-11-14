@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('updateAuthorForm').addEventListener('submit', updateAuthor);
 });
 
-// Function to load authors from the API
 function loadAuthors() {
     fetch(apiUrl)
         .then(response => {
@@ -19,7 +18,7 @@ function loadAuthors() {
             console.log('API Response:', data);
             const authors = Array.isArray(data.data) ? data.data : [];
             const authorsList = document.getElementById('authorsList');
-            authorsList.innerHTML = '';  // Clear current list
+            authorsList.innerHTML = '';
 
             authors.forEach(author => {
                 const row = document.createElement('tr');
@@ -37,12 +36,11 @@ function loadAuthors() {
             });
         })
         .catch(error => {
-            alert(error.message); // Show alert if error occurs
+            alert(error.message);
             console.error('Error loading authors:', error);
         });
 }
 
-// Function to add a new author
 function addAuthor(event) {
     event.preventDefault();
     const newAuthor = {
@@ -65,19 +63,18 @@ function addAuthor(event) {
                     throw new Error(`Error adding author. Message: ${message}`);
                 });
             }
-            return response.json(); // Parse the response as JSON
+            return response.json();
         })
         .then(result => {
-            loadAuthors();  // Reload authors after adding a new one
-            document.getElementById('addAuthorForm').reset();  // Clear the form
+            loadAuthors();
+            document.getElementById('addAuthorForm').reset();
         })
         .catch(error => {
-            alert(error.message);  // Show alert with error message
+            alert(error.message);
             console.error('Error adding author:', error);
         });
 }
 
-// Function to load author details for editing
 function editAuthor(id) {
     fetch(`${apiUrl}/${id}`)
         .then(response => {
@@ -87,25 +84,23 @@ function editAuthor(id) {
                     throw new Error(`Error loading author for editing. Message: ${message}`);
                 });
             }
-            return response.json();  // Parse the response as JSON
+            return response.json();
         })
         .then(result => {
             const author = result.data;
             console.log('Editing Author:', author);
 
-            // Populate the update form with the current author data
             document.getElementById('updateAuthorId').value = author.id;
             document.getElementById('updateFirstName').value = author.firstName;
             document.getElementById('updateLastName').value = author.lastName;
             document.getElementById('updateBiography').value = author.biography;
         })
         .catch(error => {
-            alert(error.message);  // Show alert with error message
+            alert(error.message);
             console.error('Error loading author for editing:', error);
         });
 }
 
-// Function to update an existing author
 function updateAuthor(event) {
     event.preventDefault();
     const id = document.getElementById('updateAuthorId').value;
@@ -135,19 +130,18 @@ function updateAuthor(event) {
                     throw new Error(`Error updating author. Message: ${message}`);
                 });
             }
-            return response.json();  // Parse the response as JSON
+            return response.json();
         })
         .then(result => {
-            loadAuthors();  // Reload authors after update
-            document.getElementById('updateAuthorForm').reset();  // Clear the update form
+            loadAuthors();
+            document.getElementById('updateAuthorForm').reset();
         })
         .catch(error => {
-            alert(error.message);  // Show alert with error message
+            alert(error.message);
             console.error('Error updating author:', error);
         });
 }
 
-// Function to delete an author
 function deleteAuthor(id) {
     fetch(`${apiUrl}/${id}`, {
         method: 'DELETE',
@@ -159,13 +153,13 @@ function deleteAuthor(id) {
                     throw new Error(`Error deleting author. Message: ${message}`);
                 });
             }
-            return response.json();  // Parse the response as JSON
+            return response.json();
         })
         .then(result => {
-            loadAuthors();  // Reload authors after deletion
+            loadAuthors();
         })
         .catch(error => {
-            alert(error.message);  // Show alert with error message
+            alert(error.message);
             console.error('Error deleting author:', error);
         });
 }

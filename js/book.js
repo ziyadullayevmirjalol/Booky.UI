@@ -6,15 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('updateBookForm').addEventListener('submit', updateBook);
 });
 
-// Function to load books from the API
 function loadBooks() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(result => {
-            console.log('API Response:', result); // Debugging line
+            console.log('API Response:', result);
             const books = Array.isArray(result.data) ? result.data : [];
             const booksList = document.getElementById('booksList');
-            booksList.innerHTML = '';  // Clear current list
+            booksList.innerHTML = '';
 
             books.forEach(book => {
                 const tr = document.createElement('tr');
@@ -40,15 +39,14 @@ function loadBooks() {
         });
 }
 
-// Function to add a new book
 function addBook(event) {
     event.preventDefault();
 
     const newBook = {
         title: document.getElementById('bookTitle').value,
         genre: document.getElementById('bookGenre').value,
-        publisherId: document.getElementById('publisherId').value,  // Adjust as needed
-        authorsId: document.getElementById('authorsId').value.split(',').map(id => id.trim()),   // Fix authorsId
+        publisherId: document.getElementById('publisherId').value,
+        authorsId: document.getElementById('authorsId').value.split(',').map(id => id.trim()),
     };
 
     fetch(apiUrl, {
@@ -58,32 +56,30 @@ function addBook(event) {
         },
         body: JSON.stringify(newBook),
     })
-    .then(response => {
-        if (response.ok) {
-            loadBooks();  // Reload books after adding a new one
-            document.getElementById('addBookForm').reset();  // Clear form
-        } else {
-            response.json().then(error => {
-                console.error('Error adding book:', error.message);
-                window.alert(`Error adding book: ${error.message}`);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error adding book:', error);
-        window.alert('Error adding book. Please try again later.');
-    });
+        .then(response => {
+            if (response.ok) {
+                loadBooks();
+                document.getElementById('addBookForm').reset();
+            } else {
+                response.json().then(error => {
+                    console.error('Error adding book:', error.message);
+                    window.alert(`Error adding book: ${error.message}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error adding book:', error);
+            window.alert('Error adding book. Please try again later.');
+        });
 }
 
-// Function to load book details for editing
 function editBook(id) {
     fetch(`${apiUrl}/${id}`)
         .then(response => response.json())
         .then(result => {
             const book = result.data;
-            console.log('Editing Book:', book); // Debugging line
+            console.log('Editing Book:', book);
 
-            // Populate the update form with the current book data
             document.getElementById('updateBookId').value = book.id;
             document.getElementById('updateTitle').value = book.title;
             document.getElementById('updateGenre').value = book.genre;
@@ -94,7 +90,7 @@ function editBook(id) {
         });
 }
 
-// Function to update an existing book
+
 function updateBook(event) {
     event.preventDefault();
 
@@ -109,7 +105,6 @@ function updateBook(event) {
     const updatedBook = {
         title: document.getElementById('updateTitle').value,
         genre: document.getElementById('updateGenre').value,
-        // Add other fields as needed (e.g., authorsId, publisherId, etc.)
     };
 
     fetch(`${apiUrl}/${id}`, {
@@ -119,40 +114,39 @@ function updateBook(event) {
         },
         body: JSON.stringify(updatedBook),
     })
-    .then(response => {
-        if (response.ok) {
-            loadBooks();  // Reload books after update
-            document.getElementById('updateBookForm').reset();  // Clear update form
-        } else {
-            response.json().then(error => {
-                console.error('Error updating book:', error.message);
-                window.alert(`Error updating book: ${error.message}`);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error updating book:', error);
-        window.alert('Error updating book. Please try again later.');
-    });
+        .then(response => {
+            if (response.ok) {
+                loadBooks();
+                document.getElementById('updateBookForm').reset();
+            } else {
+                response.json().then(error => {
+                    console.error('Error updating book:', error.message);
+                    window.alert(`Error updating book: ${error.message}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error updating book:', error);
+            window.alert('Error updating book. Please try again later.');
+        });
 }
 
-// Function to delete a book
 function deleteBook(id) {
     fetch(`${apiUrl}/${id}`, {
         method: 'DELETE',
     })
-    .then(response => {
-        if (response.ok) {
-            loadBooks();  // Reload books after delete
-        } else {
-            response.json().then(error => {
-                console.error('Error deleting book:', error.message);
-                window.alert(`Error deleting book: ${error.message}`);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error deleting book:', error);
-        window.alert('Error deleting book. Please try again later.');
-    });
+        .then(response => {
+            if (response.ok) {
+                loadBooks();
+            } else {
+                response.json().then(error => {
+                    console.error('Error deleting book:', error.message);
+                    window.alert(`Error deleting book: ${error.message}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting book:', error);
+            window.alert('Error deleting book. Please try again later.');
+        });
 }

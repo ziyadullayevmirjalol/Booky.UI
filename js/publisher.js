@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('updatePublisherForm').addEventListener('submit', updatePublisher);
 });
 
-// Function to load all publishers
 function loadPublishers() {
     fetch(apiUrl)
         .then(response => {
@@ -16,10 +15,10 @@ function loadPublishers() {
             return response.json();
         })
         .then(data => {
-            console.log('Publishers Data:', data); // Debugging: Check data format
-            const publishers = Array.isArray(data.data) ? data.data : []; // Ensure accessing the correct data key
+            console.log('Publishers Data:', data);
+            const publishers = Array.isArray(data.data) ? data.data : [];
             const publishersList = document.getElementById('publishersList');
-            publishersList.innerHTML = ''; // Clear previous data
+            publishersList.innerHTML = '';
 
             if (publishers.length === 0) {
                 publishersList.innerHTML = '<tr><td colspan="4">No publishers available</td></tr>';
@@ -46,7 +45,6 @@ function loadPublishers() {
         });
 }
 
-// Function to add a new publisher
 function addPublisher(event) {
     event.preventDefault();
     const newPublisher = {
@@ -79,12 +77,11 @@ function addPublisher(event) {
         });
 }
 
-// Function to edit a publisher
 function editPublisher(id) {
     fetch(`${apiUrl}/${id}`)
         .then(response => response.json())
         .then(result => {
-            const publisher = result.data || result; // Assuming result.data holds the publisher info
+            const publisher = result.data || result;
             if (publisher) {
                 document.getElementById('updatePublisherId').value = publisher.id;
                 document.getElementById('updatePublisherName').value = publisher.name;
@@ -100,7 +97,6 @@ function editPublisher(id) {
         });
 }
 
-// Function to update a publisher
 function updatePublisher(event) {
     event.preventDefault();
     const id = document.getElementById('updatePublisherId').value;
@@ -139,7 +135,6 @@ function updatePublisher(event) {
         });
 }
 
-// Function to delete a publisher
 function deletePublisher(id) {
     fetch(`${apiUrl}/${id}`, {
         method: 'DELETE',
