@@ -19,6 +19,7 @@ function loadBooks() {
             books.forEach(book => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td>${book.id}</td>
                     <td>${book.title}</td>
                     <td>${book.genre}</td>
                     <td>${new Date(book.publishedDate).toLocaleDateString()}</td>
@@ -33,7 +34,10 @@ function loadBooks() {
                 booksList.appendChild(tr);
             });
         })
-        .catch(error => console.error('Error loading books:', error));
+        .catch(error => {
+            console.error('Error loading books:', error);
+            window.alert('Error loading books. Please try again later.');
+        });
 }
 
 // Function to add a new book
@@ -41,12 +45,10 @@ function addBook(event) {
     event.preventDefault();
 
     const newBook = {
-        title: document.getElementById('title').value,
-        genre: document.getElementById('genre').value,
-        publishedDate: document.getElementById('publishedDate').value,
-        isbn: document.getElementById('isbn').value,
-        publisherId: 1,  // Adjust as needed
-        authorsId: []    // Add author IDs as needed
+        title: document.getElementById('bookTitle').value,
+        genre: document.getElementById('bookGenre').value,
+        publisherId: document.getElementById('publisherId').value,  // Adjust as needed
+        authorsId: document.getElementById('authorsId').value.split(',').map(id => id.trim()),   // Fix authorsId
     };
 
     fetch(apiUrl, {
@@ -61,10 +63,16 @@ function addBook(event) {
             loadBooks();  // Reload books after adding a new one
             document.getElementById('addBookForm').reset();  // Clear form
         } else {
-            console.error('Error adding book:', response.statusText);
+            response.json().then(error => {
+                console.error('Error adding book:', error.message);
+                window.alert(`Error adding book: ${error.message}`);
+            });
         }
     })
-    .catch(error => console.error('Error adding book:', error));
+    .catch(error => {
+        console.error('Error adding book:', error);
+        window.alert('Error adding book. Please try again later.');
+    });
 }
 
 // Function to load book details for editing
@@ -79,10 +87,11 @@ function editBook(id) {
             document.getElementById('updateBookId').value = book.id;
             document.getElementById('updateTitle').value = book.title;
             document.getElementById('updateGenre').value = book.genre;
-            document.getElementById('updatePublishedDate').value = book.publishedDate.split('T')[0];  // Format date
-            document.getElementById('updateIsbn').value = book.isbn;
         })
-        .catch(error => console.error('Error loading book for editing:', error));
+        .catch(error => {
+            console.error('Error loading book for editing:', error);
+            window.alert('Error loading book for editing. Please try again later.');
+        });
 }
 
 // Function to update an existing book
@@ -93,16 +102,14 @@ function updateBook(event) {
 
     if (!id) {
         console.error('Book ID is undefined.');
+        window.alert('Book ID is undefined.');
         return;
     }
 
     const updatedBook = {
         title: document.getElementById('updateTitle').value,
         genre: document.getElementById('updateGenre').value,
-        publishedDate: document.getElementById('updatePublishedDate').value,
-        isbn: document.getElementById('updateIsbn').value,
-        publisherId: 1,  // Adjust as needed
-        authorsId: []    // Add author IDs as needed
+        // Add other fields as needed (e.g., authorsId, publisherId, etc.)
     };
 
     fetch(`${apiUrl}/${id}`, {
@@ -117,10 +124,16 @@ function updateBook(event) {
             loadBooks();  // Reload books after update
             document.getElementById('updateBookForm').reset();  // Clear update form
         } else {
-            console.error('Error updating book:', response.statusText);
+            response.json().then(error => {
+                console.error('Error updating book:', error.message);
+                window.alert(`Error updating book: ${error.message}`);
+            });
         }
     })
-    .catch(error => console.error('Error updating book:', error));
+    .catch(error => {
+        console.error('Error updating book:', error);
+        window.alert('Error updating book. Please try again later.');
+    });
 }
 
 // Function to delete a book
@@ -132,8 +145,14 @@ function deleteBook(id) {
         if (response.ok) {
             loadBooks();  // Reload books after delete
         } else {
-            console.error('Error deleting book:', response.statusText);
+            response.json().then(error => {
+                console.error('Error deleting book:', error.message);
+                window.alert(`Error deleting book: ${error.message}`);
+            });
         }
     })
-    .catch(error => console.error('Error deleting book:', error));
+    .catch(error => {
+        console.error('Error deleting book:', error);
+        window.alert('Error deleting book. Please try again later.');
+    });
 }

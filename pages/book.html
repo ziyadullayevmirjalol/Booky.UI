@@ -16,12 +16,13 @@
     <table id="booksTable" border="1" width="700px">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>Genre</th>
                 <th>Published Date</th>
                 <th>ISBN</th>
                 <th>PublisherId</th>
-                <th>authorsId</th>
+                <th>Authors Id</th>
                 <th width="100px">Actions</th>
             </tr>
         </thead>
@@ -44,8 +45,6 @@
         <input type="hidden" id="updateBookId" />
         <input type="text" id="updateTitle" placeholder="Title" required />
         <input type="text" id="updateGenre" placeholder="Genre" required />
-        <input type="date" id="updatePublishedDate" placeholder="Published Date" required />
-        <input type="text" id="updateIsbn" placeholder="ISBN" required />
         <button type="submit">Update Book</button>
     </form>
 
